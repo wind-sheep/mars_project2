@@ -86,24 +86,26 @@ if __name__ == '__main__':
         rospy.loginfo("Pixel x: {}".format(pixel_x))
     else:
         rospy.logwarn("Failed to read coordinates.")
-    arm_x, arm_y, arm_z = camera_z, -camera_x, -camera_y
-    arm_y+=0.060/238*(pixel_x-320)
-    modified_x = -0.113
-    modified_y = -0.018 - 0.015 -0.015
-    modified_z = 0.094 + 0.04
+        
+    #change camera coordinate to arm coordinate
+    arm_x, arm_y, arm_z = camera_z, -camera_x, -camera_y 
+    arm_y+=0.060/238*(pixel_x-320) # a modify term due to the error when the object is far from the middle of the camera, 320 is the middle x pixel of the camera
+    modified_x = -0.113                     #translation matrix of x
+    modified_y = -0.018 - 0.015 -0.015      #translation matrix of y
+    modified_z = 0.094 + 0.04               #translation matrix of z
     cartesian_targets = [
-        [0.60 + arm_x + modified_x - 0.1, -0.12 + arm_y + modified_y, 0.69 + arm_z + modified_z, 0.5, 0.5, 0.5, 0.5],
-        [0.60 + arm_x + modified_x      , -0.12 + arm_y + modified_y, 0.69 + arm_z + modified_z, 0.5, 0.5, 0.5, 0.5]
+        [0.60 + arm_x + modified_x - 0.1, -0.12 + arm_y + modified_y, 0.69 + arm_z + modified_z, 0.5, 0.5, 0.5, 0.5], # 1st point
+        [0.60 + arm_x + modified_x      , -0.12 + arm_y + modified_y, 0.69 + arm_z + modified_z, 0.5, 0.5, 0.5, 0.5]  # 2nd point
     ]
 
     joint_targets = [
-        [0.011565, -0.248447, 2.321848, -2.072889, 1.559083, 0.000320], # above observe point
-        #[0.011341, 0.060872, 2.494978, -2.556190, 1.559743, 0.000165], # observe point
-        [-0.342614, 0.499793, 1.296339, -1.794004, 1.913511, 0.002463], # above place point 
-        [-0.342602, 0.545972, 1.393131, -1.937829, 1.914287, 0.001997], # place point 
-        [-0.494512, 0.216017, 1.865652, -2.078784, 2.066935, 0.001212], # go out from place point 
-        [0.011565, -0.248447, 2.321848, -2.072889, 1.559083, 0.000320], # above observe point
-        [0.011341, 0.060872, 2.494978, -2.556190, 1.559743, 0.000165]   # observe point
+        [0.011565, -0.248447, 2.321848, -2.072889, 1.559083, 0.000320], # above observe point       # 3rd point
+        #[0.011341, 0.060872, 2.494978, -2.556190, 1.559743, 0.000165], # observe point             
+        [-0.342614, 0.499793, 1.296339, -1.794004, 1.913511, 0.002463], # above place point         # 4th point
+        [-0.342602, 0.545972, 1.393131, -1.937829, 1.914287, 0.001997], # place point               # 5th point
+        [-0.494512, 0.216017, 1.865652, -2.078784, 2.066935, 0.001212], # go out from place point   # 6th point
+        [0.011565, -0.248447, 2.321848, -2.072889, 1.559083, 0.000320], # above observe point       # 7th point
+        [0.011341, 0.060872, 2.494978, -2.556190, 1.559743, 0.000165]   # observe point             # 8th point
     ]
     try:
         # Cartesian movements
@@ -113,7 +115,7 @@ if __name__ == '__main__':
             time.sleep(2)  # Pause between movements
 
             # Perform grasp actions at specific points
-            if i == 1:  # Example: Grasp at the second Cartesian target
+            if i == 1:  # 2nd point
                 rospy.loginfo("Closing gripper to grasp the object.")
                 control_gripper(True)  # Close the gripper
                 time.sleep(2)
@@ -125,7 +127,7 @@ if __name__ == '__main__':
             time.sleep(2)  # Pause between movements
 
             # Perform grasp actions at specific joint configurations
-            if i == 2:  # Example: Release grasp at the fourth joint target
+            if i == 2:  # 5th point
                 rospy.loginfo("Opening gripper to release the object.")
                 control_gripper(False)  # Open the gripper
                 time.sleep(2)
