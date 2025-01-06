@@ -1,0 +1,8 @@
+prefix=/home/ros/web_test_u2/devel
+
+Name: nursing_arm
+Description: Description of nursing_arm
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
