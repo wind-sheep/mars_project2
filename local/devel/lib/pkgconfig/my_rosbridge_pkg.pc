@@ -1,0 +1,8 @@
+prefix=/home/stu/web_project_2/devel
+
+Name: my_rosbridge_pkg
+Description: Description of my_rosbridge_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

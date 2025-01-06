@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find my_rosbridge_pkg)/launch/rosbridge_web.launch" />
+    <include file="$(find my_rosbridge_pkg)/launch/start_http_server.launch" />
+    <node pkg="my_rosbridge_pkg" type="number_listener.py" name="number_listener" output="screen"/>
+</launch>
