@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['Soda', 'Tea']
+
+roboflow:
+  workspace: wilsoncai
+  project: drink-project
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/wilsoncai/drink-project/dataset/1
